@@ -7,7 +7,7 @@ A mod that enables custom color palettes in Idol Showdown
 Prism Melody uses Melon Loader as its mod loader. To install Melon Loader, first download the [latest release](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip). Extract the contents of the .zip file into the root of your Idol Showdown installation, next to the .exe.
 
 ### Prism Melody
-To install Prism Melody, download the [latest release](https://github.com/Makarew/Prism-Melody/releases/latest). Extract the contents .zip file into the root of your Idol Showdown installation, next to the .exe. 
+To install Prism Melody, download the [latest release](https://github.com/Makarew/Prism-Melody/releases/latest). Extract the "Mods" and "Plugins" folders from the .zip file into the root of your Idol Showdown installation, next to the .exe. 
 
 ### Color Palettes
 Color palette files will be placed into "Idol Showdown/Plugins/Palettes". You need both "in" and "out" files for color palettes to work properly. To change the outfit the color palette is applied to, change the number in the file name to any number between 0 and 7. Prism Melody includes color palettes for Aki and Coco's 2nd outfits. 
