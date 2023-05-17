@@ -13,17 +13,16 @@ namespace Prism_Melody
 {
     public class Plugin : MelonMod
     {
-        internal bool loadedPalettes = false;
-
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        public override void OnApplicationStart()
         {
-            if (GlobalManager.Instance && GlobalManager.Instance.GameManager && sceneName == "CharacterSelect")
-            {
-                LoadPalettes();
-            }
+            HarmonyInstance.Patch(typeof(GameManager).GetMethod("Start",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic),null,
+                new HarmonyLib.HarmonyMethod(GetType().GetMethod(nameof(OnGameManagerLoaded),System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic)));
+        }
+        private static void OnGameManagerLoaded(){
+            LoadPalettes();
         }
 
-        internal void LoadPalettes()
+        internal static void LoadPalettes()
         {
             foreach(Idol idol in GlobalManager.Instance.GameManager.Characters)
             {
