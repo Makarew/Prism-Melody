@@ -25,24 +25,24 @@ namespace Prism_Melody
 
         internal void LoadPalettes()
         {
-            foreach(Idol idol in GlobalManager.Instance.GameManager.Characters)
+            string[] allPaletteDirectories = Directory.GetFiles(Path.Combine(MelonHandler.PluginsDirectory, "Palettes"), "mod.json", SearchOption.AllDirectories);
+
+            foreach (Idol idol in GlobalManager.Instance.GameManager.Characters)
             {
-                for (int j = 0; j < idol.paletteSwapMaterials.Count; j++)
+                List<string> cCharIn = new List<string>();
+                List<string> cCharOut = new List<string>();
+
+                foreach (string cChar in allPaletteDirectories)
                 {
-                    string filePath = Path.Combine(MelonHandler.PluginsDirectory, "Palettes", idol.charName + j);
+                    MetadataBase mb = MetadataBase.Load(cChar);
 
-                    List<Vector4> inColors = new List<Vector4>();
-                    List<Vector4> outColors = new List<Vector4>();
-
-                    Material mat = idol.paletteSwapMaterials[j];
-
-                    if (File.Exists(filePath + "in.txt"))
+                    if (mb.Character == idol.charName)
                     {
-                        MelonLogger.Msg("Found an In Palette For Outfit " + j + " For " + idol.charName);
+                        Material mat = idol.paletteSwapMaterials[mb.Outfit];
 
                         string line;
                         int k = 0;
-                        using (StreamReader sr = new StreamReader(filePath + "in.txt"))
+                        using (StreamReader sr = new StreamReader(Path.Combine(mb.Location, mb.Character + mb.Outfit + "in.txt")))
                         {
                             do
                             {
@@ -50,7 +50,7 @@ namespace Prism_Melody
                                 if (!string.IsNullOrEmpty(line))
                                 {
                                     string[] lineData = line.Split(';');
-                                    if(lineData.Length<4) continue; // Check for bad lines
+                                    if (lineData.Length < 4) continue; // Check for bad lines
 
                                     mat.SetVector("inColour" + k++, new Vector4(float.Parse(lineData[0]), float.Parse(lineData[1]), float.Parse(lineData[2]), float.Parse(lineData[3])));
                                 }
@@ -58,15 +58,9 @@ namespace Prism_Melody
 
                             sr.Close();
                         }
-                    }
 
-                    if (File.Exists(filePath + "out.txt"))
-                    {
-                        MelonLogger.Msg("Found an Out Palette For Outfit " + j + " For " + idol.charName);
-
-                        string line;
-                        int k = 0;
-                        using (StreamReader sr = new StreamReader(filePath + "out.txt"))
+                        k = 0;
+                        using (StreamReader sr = new StreamReader(Path.Combine(mb.Location, mb.Character + mb.Outfit + "out.txt")))
                         {
                             do
                             {
@@ -74,7 +68,7 @@ namespace Prism_Melody
                                 if (!string.IsNullOrEmpty(line))
                                 {
                                     string[] lineData = line.Split(';');
-                                    if(lineData.Length<4) continue; // Check for bad lines
+                                    if (lineData.Length < 4) continue; // Check for bad lines
 
                                     mat.SetVector("outColour" + k++, new Vector4(float.Parse(lineData[0]), float.Parse(lineData[1]), float.Parse(lineData[2]), float.Parse(lineData[3])));
                                 }
