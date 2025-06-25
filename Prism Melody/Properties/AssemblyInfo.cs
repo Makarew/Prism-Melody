@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using Prism_Melody;
 using MelonLoader;
 
-[assembly: MelonInfo(typeof(Plugin), "Prism Melody", "1.0.0", "Makarew")]
+[assembly: MelonInfo(typeof(Plugin), "Prism Melody", "2.0.0", "Makarew")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
